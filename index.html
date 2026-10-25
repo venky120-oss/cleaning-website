@@ -106,11 +106,13 @@ nav.scrolled{box-shadow:0 6px 24px rgba(15,23,42,.08)}
 .hero .eyebrow{color:#fff;background:var(--accent)}
 .hero-q{font-family:"Noto Sans Tamil",Poppins,sans-serif;font-weight:500;font-size:.92rem;color:var(--text);margin-bottom:10px;line-height:1.5}
 .hero p.lead{font-size:1rem;color:var(--muted);max-width:540px;margin-bottom:30px}
+@media(max-width:600px){.hero p.lead{font-size:.88rem;line-height:1.65}}
 .hero-ctas{display:flex;flex-wrap:wrap;gap:24px;align-items:center}
 .hero-ctas .btn-primary{box-shadow:none}
 .hero-link{font-weight:600;color:var(--primary)}
 .hero-link:hover{text-decoration:underline}
-.badges{display:flex;flex-wrap:nowrap;gap:6px;margin-top:28px}
+.badges{display:flex;flex-wrap:nowrap;gap:8px;margin-top:28px}
+@media(max-width:600px){.badges{justify-content:space-between;gap:4px}}
 .badges span{display:inline-flex;align-items:center;gap:4px;padding:5px clamp(8px,2vw,14px);white-space:nowrap;border-radius:99px;background:var(--card);border:1px solid var(--border);font-size:clamp(.72rem,2.6vw,.88rem);font-weight:500;color:var(--text)}
 .badges span::before{content:"✓";color:var(--accent);font-weight:700}
 .hero-card{background:var(--card);border-radius:24px;padding:30px;box-shadow:var(--shadow-lg);border:1px solid var(--border);position:relative}
@@ -125,6 +127,25 @@ nav.scrolled{box-shadow:0 6px 24px rgba(15,23,42,.08)}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
 @media(max-width:960px){.grid3{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:620px){.grid3{grid-template-columns:1fr}}
+
+/* OUR SERVICES on phones: each card slides in from alternate sides, then its icon pops,
+   text rises, a light sweep crosses the card and the "Book →" arrow keeps nudging */
+@media(max-width:620px){
+  .js #services .card.svc{position:relative;overflow:hidden;opacity:0;transform:translateX(-48px) scale(.95)}
+  .js #services .card.svc:nth-child(even){transform:translateX(48px) scale(.95)}
+  .js #services .card.svc.svc-in{opacity:1;transform:none;transition:opacity .6s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+  .js #services .svc .icon{transform:scale(0) rotate(-120deg)}
+  .js #services .svc.svc-in .icon{transform:none;transition:transform .6s .35s cubic-bezier(.34,1.56,.64,1)}
+  .js #services .svc h3,.js #services .svc p,.js #services .svc .price{opacity:0;transform:translateY(14px)}
+  .js #services .svc.svc-in h3{opacity:1;transform:none;transition:.5s .45s}
+  .js #services .svc.svc-in p{opacity:1;transform:none;transition:.5s .55s}
+  .js #services .svc.svc-in .price{opacity:1;transform:none;transition:.5s .65s}
+  .js #services .svc::after{content:"";position:absolute;top:0;bottom:0;left:-60%;width:45%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-18deg);pointer-events:none}
+  .js #services .svc.svc-in::after{animation:sweep 1.1s .7s ease-out forwards}
+  .js #services .svc.svc-in .price a{display:inline-block;animation:nudge 1.6s 1.4s ease-in-out infinite}
+}
+@keyframes sweep{to{left:130%}}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
 .card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:30px;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s,border-color .25s}
 .card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--primary) 40%,var(--border))}
 .icon{width:56px;height:56px;border-radius:14px;display:grid;place-items:center;background:var(--primary);color:#fff;margin-bottom:18px}
@@ -671,7 +692,17 @@ drawSteps();
 // Sections fade up as they come into view. The reveal classes are removed once the
 // animation ends so cards get their normal hover lift back.
 document.documentElement.classList.add('js');
-const revealEls = document.querySelectorAll('.sec-head, #why .card, #services .card, .t-card, .ba, .freq-grid > *, .area-box > *, .faq-list, .contact-grid > *, .stats-grid > *');
+const phone = matchMedia('(max-width:620px)').matches;
+const revealEls = document.querySelectorAll('.sec-head, #why .card, ' + (phone ? '' : '#services .card, ') + '.t-card, .ba, .freq-grid > *, .area-box > *, .faq-list, .contact-grid > *, .stats-grid > *');
+// Phones get the richer Our Services animation instead (see the OUR SERVICES CSS)
+if (phone) {
+  const svcIO = new IntersectionObserver(entries => entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    en.target.classList.add('svc-in');
+    svcIO.unobserve(en.target);
+  }), {rootMargin: '0px 0px -12% 0px'});
+  document.querySelectorAll('#services .card').forEach(c => { c.classList.add('svc'); svcIO.observe(c); });
+}
 revealEls.forEach(el => el.classList.add('reveal'));
 const revealIO = new IntersectionObserver(entries => entries.forEach(en => {
   if (!en.isIntersecting) return;
