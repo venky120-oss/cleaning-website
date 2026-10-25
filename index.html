@@ -104,11 +104,11 @@ nav.scrolled{box-shadow:0 6px 24px rgba(15,23,42,.08)}
    so the headline stays readable; smaller file on phones. */
 .hero::before{content:"";position:absolute;inset:0;
   background:
-    linear-gradient(90deg,color-mix(in srgb,var(--hero-a) 84%,transparent) 0%,color-mix(in srgb,var(--hero-a) 66%,transparent) 45%,color-mix(in srgb,var(--hero-b) 30%,transparent) 100%),
+    linear-gradient(90deg,color-mix(in srgb,var(--hero-a) 74%,transparent) 0%,color-mix(in srgb,var(--hero-a) 52%,transparent) 45%,color-mix(in srgb,var(--hero-b) 15%,transparent) 100%),
     url("https://images.unsplash.com/photo-1758273238415-01ec03d9ef27?w=1600&q=60&auto=format&fit=crop") 30% center/cover no-repeat}
 @media(max-width:860px){
   .hero::before{background:
-    linear-gradient(180deg,color-mix(in srgb,var(--hero-a) 82%,transparent) 0%,color-mix(in srgb,var(--hero-a) 66%,transparent) 50%,color-mix(in srgb,var(--hero-b) 45%,transparent) 100%),
+    linear-gradient(180deg,color-mix(in srgb,var(--hero-a) 72%,transparent) 0%,color-mix(in srgb,var(--hero-a) 50%,transparent) 50%,color-mix(in srgb,var(--hero-b) 30%,transparent) 100%),
     url("https://images.unsplash.com/photo-1758273238415-01ec03d9ef27?w=800&q=55&auto=format&fit=crop") 28% center/cover no-repeat}
 }
 .bubble{position:absolute;will-change:transform;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.9),rgba(14,165,233,.15) 60%,transparent 70%);border:1px solid rgba(14,165,233,.2);animation:float 9s ease-in-out infinite}
@@ -127,6 +127,9 @@ nav.scrolled{box-shadow:0 6px 24px rgba(15,23,42,.08)}
 .hero-q{font-family:"Noto Sans Tamil",Poppins,sans-serif;font-weight:500;font-size:.92rem;color:var(--text);margin-bottom:10px;line-height:1.5}
 .hero p.lead{font-size:1rem;color:var(--muted);max-width:540px;margin-bottom:30px}
 @media(max-width:600px){.hero p.lead{font-size:.88rem;line-height:1.65}}
+/* With the photo showing more, keep the small hero text crisp: darker grey and a soft light halo */
+.hero p.lead{color:color-mix(in srgb,var(--text) 78%,var(--muted))}
+.hero p.lead,.hero-q{text-shadow:0 0 12px var(--hero-a),0 0 2px var(--hero-a)}
 .hero-ctas{display:flex;flex-wrap:wrap;gap:24px;align-items:center}
 .hero-ctas .btn-primary{box-shadow:none}
 .hero-link{font-weight:600;color:var(--primary)}
