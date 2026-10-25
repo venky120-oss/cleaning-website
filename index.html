@@ -106,10 +106,16 @@ nav.scrolled{box-shadow:0 6px 24px rgba(15,23,42,.08)}
   background:
     linear-gradient(90deg,color-mix(in srgb,var(--hero-a) 74%,transparent) 0%,color-mix(in srgb,var(--hero-a) 52%,transparent) 45%,color-mix(in srgb,var(--hero-b) 15%,transparent) 100%),
     url("https://images.unsplash.com/photo-1758273238415-01ec03d9ef27?w=1600&q=60&auto=format&fit=crop") 30% center/cover no-repeat}
+/* Phones: the photo covers only the top of the hero (headline down to the buttons), full
+   width, and fades out at the bottom — it no longer stretches behind the checklist card. */
 @media(max-width:860px){
-  .hero::before{background:
-    linear-gradient(180deg,color-mix(in srgb,var(--hero-a) 72%,transparent) 0%,color-mix(in srgb,var(--hero-a) 50%,transparent) 50%,color-mix(in srgb,var(--hero-b) 30%,transparent) 100%),
-    url("https://images.unsplash.com/photo-1758273238415-01ec03d9ef27?w=800&q=55&auto=format&fit=crop") 28% center/cover no-repeat}
+  .hero::before{display:none}
+  .hero-copy{position:relative;isolation:isolate}
+  .hero-copy::before{content:"";position:absolute;z-index:-1;top:-64px;bottom:-28px;left:-16px;right:-16px;
+    background:
+      linear-gradient(180deg,color-mix(in srgb,var(--hero-a) 68%,transparent) 0%,color-mix(in srgb,var(--hero-a) 50%,transparent) 40%,color-mix(in srgb,var(--hero-a) 66%,transparent) 70%,color-mix(in srgb,var(--hero-a) 70%,transparent) 100%),
+      url("https://images.unsplash.com/photo-1758273238415-01ec03d9ef27?w=800&q=55&auto=format&fit=crop") 30% 40%/cover no-repeat;
+    -webkit-mask-image:linear-gradient(180deg,#000 82%,transparent);mask-image:linear-gradient(180deg,#000 82%,transparent)}
 }
 .bubble{position:absolute;will-change:transform;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.9),rgba(14,165,233,.15) 60%,transparent 70%);border:1px solid rgba(14,165,233,.2);animation:float 9s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-24px)}}
@@ -383,7 +389,7 @@ footer ul a:hover{color:var(--primary)}
   <span class="sparkle" style="top:14%;right:30%;font-size:1.1rem;animation-delay:-2s">✦</span>
 
   <div class="wrap hero-grid">
-    <div>
+    <div class="hero-copy">
       <span class="eyebrow"><i class="dot"></i>Deep Cleaning Specialists in Sivagangai</span>
       <p class="hero-q" lang="ta">வீட்டில் தூசி, எண்ணெய் பிசுக்கு, கறைகள் தொல்லையா?</p>
       <h1>Relax — We'll Make Your Home <span class="hl">Spotlessly Clean</span></h1>
