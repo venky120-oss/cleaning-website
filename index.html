@@ -17,6 +17,7 @@
  "openingHours":"Mo-Su 07:00-20:00","priceRange":"₹₹"}
 </script>
 <script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://images.unsplash.com">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- Fonts load without blocking the first paint; the page shows instantly in system fonts, then swaps.
@@ -99,6 +100,17 @@ nav.scrolled{box-shadow:0 6px 24px rgba(15,23,42,.08)}
 
 /* HERO */
 .hero{position:relative;overflow:hidden;padding:96px 0 80px;background:linear-gradient(135deg,var(--hero-a),var(--hero-b))}
+/* Background photo of a woman mopping (Unsplash, free licence), faded behind the text side
+   so the headline stays readable; smaller file on phones. */
+.hero::before{content:"";position:absolute;inset:0;
+  background:
+    linear-gradient(90deg,color-mix(in srgb,var(--hero-a) 84%,transparent) 0%,color-mix(in srgb,var(--hero-a) 66%,transparent) 45%,color-mix(in srgb,var(--hero-b) 30%,transparent) 100%),
+    url("https://images.unsplash.com/photo-1758273238415-01ec03d9ef27?w=1600&q=60&auto=format&fit=crop") 30% center/cover no-repeat}
+@media(max-width:860px){
+  .hero::before{background:
+    linear-gradient(180deg,color-mix(in srgb,var(--hero-a) 82%,transparent) 0%,color-mix(in srgb,var(--hero-a) 66%,transparent) 50%,color-mix(in srgb,var(--hero-b) 45%,transparent) 100%),
+    url("https://images.unsplash.com/photo-1758273238415-01ec03d9ef27?w=800&q=55&auto=format&fit=crop") 28% center/cover no-repeat}
+}
 .bubble{position:absolute;will-change:transform;border-radius:50%;background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.9),rgba(14,165,233,.15) 60%,transparent 70%);border:1px solid rgba(14,165,233,.2);animation:float 9s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-24px)}}
 .sparkle{position:absolute;color:var(--primary);opacity:.6;animation:twinkle 3s ease-in-out infinite}
